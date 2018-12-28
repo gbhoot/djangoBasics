@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Session Words</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" 
+        integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" 
+        crossorigin="anonymous">
+    <style>
+        #right-side {
+            border-left: 2px black solid;
+        }
+    </style>
+</head>
+
+<body class="py-4">
+    <div class="container mt-3">
+        <div class="row mt-5">
+            <div class="col">
+                <div class="row mb-3">
+                    <h3>Add a new word</h3>
+                </div>
+                <div class="row">
+                    <form action="/addWord" method="POST" class="w-75">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <input type="text" placeholder="Type in your word" class="form-control" 
+                                name="word">
+                        </div>
+                        <div class="form-group">
+                            <label>Choose a color</label>
+                            <div class="col">
+                                <div class="form-check">
+                                    <input class="form-check-input" id="red" type="radio" name="color" 
+                                        value="red" checked>
+                                    <label class="form-check-label" for="red">Red</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="green" type="radio" name="color" 
+                                        value="green">
+                                    <label class="form-check-label" for="green">Green</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" id="blue" type="radio" name="color" 
+                                        value="blue">
+                                    <label class="form-check-label" for="blue">Blue</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input class="form-check-input" id="checker" type="checkbox" name="checker">
+                                <label class="form-check-label" for="checker">Large Font Size</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary"><b>Add to Session</b></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="col" id="right-side">
+                <div class="row d-flex justify-content-end">
+                    {% if words %}
+                        <a href="/clearSesh"><button class="btn btn-outline-danger">
+                            <b>Clear Session</b></button></a>
+                    {% else %}
+                        <button class="btn btn-outline-danger" disabled><b>Clear Session</b></button>
+                    {% endif %}
+                </div>
+                <div class="row pl-4 my-2">
+                    {% if words %}
+                        {% for word in words %}
+                            <div class="row w-100 mb-0">
+                                {% if word.checker %}
+                                    <h4 style="color:{{ word.color }}">{{ word.word }}</h4>
+                                {% else %}
+                                    <h6 style="color:{{ word.color }}">{{ word.word }}</h6>
+                                {% endif %}                                    
+                            </div>
+                            <div class="row w-100">
+                                <p class="text-secondary"><em>Added on {{ word.timestamp }}</em></p>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class=" mt-4 text-info">Please add some words to the current sesh...</p>
+                    {% endif %}
+                </div>
+            </div>                        
+        </div>
+    </div>
+      
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" 
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" 
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" 
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" 
+        integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" 
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

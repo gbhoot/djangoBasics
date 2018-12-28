@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Ninja Money</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" 
+        integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" 
+        crossorigin="anonymous">
+    <style>
+        .place {
+            width: 21%;
+            border: 2px black solid;
+        }
+
+        #gold-p {
+            width: 10%;
+        }
+
+        #scrolling {
+            border: 2px solid black;
+            width: 100%;
+            height: 300px;
+            overflow: scroll;
+        }
+
+        #activities {
+            padding-left: 4%;
+            padding-right: 4%;
+        }
+
+    </style>
+</head>
+
+<body class="pt-4">
+    <div class="container px-0">
+        <div class="row mb-5 d-flex justify-content-center">
+            <h2>Ninja Money</h2>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col">
+                <h5 class="d-inline-block mr-3">Your Gold:</h5>
+                {% if gold < 0 %}
+                    <p class="border border-danger rounded d-inline-block mb-0 py-1 text-center" 
+                        id="gold-p"><b>{{ gold }}</b></p>
+                {% else %}
+                    <p class="border border-success rounded d-inline-block mb-0 py-1 text-center" 
+                        id="gold-p"><b>{{ gold }}</b></p>
+                {% endif %}
+            </div>
+            <div class="col-md-2 text-right">
+                <div class="form-group  ">
+                    <a href="/reset"><button type="submit" class="btn btn-danger">Reset</button></a>
+                </div>
+            </div>
+        </div>
+    
+        <div class="row mx-auto">
+            <div class="text-center place mx-auto">
+                <h5 class="my-3">Farm</h5>
+                <p class="mb-0">(earns 10-20</p>
+                <p>golds)</p>
+                <div class="form-group d-flex justify-content-center my-4">
+                    <a href="/process_money-farm"><button type="submit" class="btn btn-primary">
+                        Find Gold</button></a>
+                </div>
+            </div>
+
+            <div class="text-center place mx-auto">
+                <h5 class="my-3">Cave</h5>
+                <p class="mb-0">(earns 5-10</p>
+                <p>golds)</p>
+                <div class="form-group d-flex justify-content-center my-4">
+                    <a href="/process_money-cave"><button type="submit" class="btn btn-primary">
+                        Find Gold</button></a>
+                </div>
+            </div>
+
+            <div class="text-center place mx-auto">
+                <h5 class="my-3">House</h5>
+                <p class="mb-0">(earns 2-5</p>
+                <p>golds)</p>
+                <div class="form-group d-flex justify-content-center my-4">
+                    <a href="/process_money-home"><button type="submit" class="btn btn-primary">
+                        Find Gold</button></a>
+                </div>
+            </div>
+
+            <div class="text-center place mx-auto">
+                <h5 class="my-3">Casino</h5>
+                <p class="mb-0">(earns/take 0-50</p>
+                <p>golds)</p>
+                <div class="form-group d-flex justify-content-center my-4">
+                    <a href="/process_money-casi"><button type="submit" class="btn btn-primary">
+                        Find Gold</button></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5" id="activities">
+            <h6>Activity:</h6>
+            <div class="scrollbar scrollbar-primary" id="scrolling">
+                {% for activity in activities %}
+                    {% if activity.amount < 0 %}
+                        <p class="text-danger mb-0">Entered a casino and lost {{ activity.amount }} 
+                            golds... Ouch... ({{ activity.time }})
+                        </p>
+                    {% else %}
+                        <p class="text-success mb-0">Earned {{ activity.amount }}
+                            {% if activity.amount == 1 or activity.amount == 0 %}
+                                <span> gold </span>
+                            {% else %}
+                                <span> golds </span>
+                            {% endif %}
+                            from the {{ activity.place }}! ({{ activity.time }})
+                        </p>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+      
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" 
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" 
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" 
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" 
+        integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" 
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
